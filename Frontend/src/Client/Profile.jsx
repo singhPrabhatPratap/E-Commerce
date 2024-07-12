@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import Usercontext from '../context/Usercontext';
+import { Link } from 'react-router-dom';
 
 export default function Profile() {
     let { profile } = useContext(Usercontext);
@@ -19,7 +20,12 @@ export default function Profile() {
           <div className="mt-10 md:mt-0">
             <p className="mt-7 text-lg font-semibold text-black">{profile.username}</p>
             <p className="mt-1 text-base text-gray-600">{profile.email}</p>
-          </div>
+          </div><br />
+          <Link
+            to={'/'}
+          onClick={()=>window.reload()}
+          className='text-red-500 font-bold'>LOGOUT
+          </Link>
         </div>
       </div>
     </section>

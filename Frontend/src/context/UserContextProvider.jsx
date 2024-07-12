@@ -3,6 +3,7 @@ import UserContext from './Usercontext.js'
 
 export default function UserContextProvider({children}) {
     let [pass,setPass]= useState(false)
+    // let [navclick,setnavclick]=useState('')
     let [clientlog,setClientlog]=useState('')
     let[count,setCount]=useState(0)
     let[total,setTotal]=useState(0)

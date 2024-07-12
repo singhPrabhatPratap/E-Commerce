@@ -32,6 +32,7 @@ export default function ClientLogin() {
       setClientlog(unique);
       // console.log(unique)
       setProfile(result.data.user)
+      
       navigation("/");
       getCart(unique)
 

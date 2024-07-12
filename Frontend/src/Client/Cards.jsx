@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
+import { Star, ChevronDown } from 'lucide-react'
 // import { Home, BarChart, Copy, Bookmark, Users, Settings } from 'lucide-react'
 import Usercontext from '../context/Usercontext'
 import { useNavigate } from 'react-router-dom'
@@ -12,12 +13,18 @@ export default function Cards() {
   let{ total,setTotal } =useContext(Usercontext)
 
   async function getData(){
-    let result = await axios.get(`http://localhost:3000/api/getDatabycat/${cartcat}`)
+   if(cartcat == 'ALL'){
+    let result = await axios.get(`http://localhost:3000/api/getData`)
     setData(result.data)
+   }
+   else{
+    let result = await axios.get(`http://localhost:3000/api/getData`)
+    setData(result.data.filter((element)=>element.productType==cartcat))
+   }
   }
   useEffect(()=>{
     getData()
-  },[])
+  },[cartcat])
   async function getCart() {
     let result = await axios.get(
       `http://localhost:3000/clientTable/getCart/${clientlog}`
@@ -58,24 +65,18 @@ export default function Cards() {
             src={`http://localhost:3000/${product.image}`}
             className="aspect-[16/9] w-full rounded-md md:aspect-auto md:h-[300px] lg:h-[200px]"
           />
+          <div className='flex mt-2'>
+              {[...Array(product.productRating)].map((i)=>(
+                <Star key={i} size={16} className="text-yellow-500" />
+              ))}
+            </div>
           <div className="p-4">
-            <h1 className="inline-flex items-center text-lg font-semibold">₹{product.productBrand}</h1><br />
-            <h1 className="inline-flex items-center text-lg font-semibold">₹{product.productPrice}</h1>
+            
+            <h1 className="inline-flex items-center text-lg font-semibold">{product.productBrand}</h1><br />
+            <h1 className="inline-flex items-center text-lg font-semibold">₹ {product.productPrice}</h1>
             <p className="mt-3 text-sm text-gray-600">
              {product.productDesc}
             </p>
-            <div className="mt-5 flex items-center space-x-2">
-              <span className="block text-sm font-semibold">Size : </span>
-              <span className="block cursor-pointer rounded-md border border-gray-300 p-1 px-2 text-xs font-medium">
-                8 UK
-              </span>
-              <span className="block cursor-pointer rounded-md border border-gray-300 p-1 px-2 text-xs font-medium">
-                9 UK
-              </span>
-              <span className="block cursor-pointer rounded-md border border-gray-300 p-1 px-2 text-xs font-medium">
-                10 UK
-              </span>
-            </div>
             <button
             onClick={()=>handleadd(product)}
               type="button"
