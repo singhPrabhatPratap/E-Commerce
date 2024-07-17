@@ -22,6 +22,7 @@ import ClientLogin from "./Client/ClientLogin.jsx";
 import Cart from "./Client/Cart.jsx";
 import Profile from "./Client/Profile.jsx";
 import Cards from "./Client/Cards.jsx";
+import CardDet from './Client/CardDet.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -33,6 +34,7 @@ const router = createBrowserRouter(
         <Route path="/cart" element={<Cart/>}/>
         <Route path="/profile" element={<Profile/>}/>
         <Route path="/cards" element={<Cards/>}/>
+        <Route path="/carddet" element={<CardDet/>}/>
 
       </Route>
       

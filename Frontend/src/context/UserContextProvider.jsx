@@ -1,18 +1,37 @@
-import React, { useState } from 'react'
-import UserContext from './Usercontext.js'
+import React, { useState } from "react";
+import UserContext from "./Usercontext.js";
 
-export default function UserContextProvider({children}) {
-    let [pass,setPass]= useState(false)
-    // let [navclick,setnavclick]=useState('')
-    let [clientlog,setClientlog]=useState('')
-    let[count,setCount]=useState(0)
-    let[total,setTotal]=useState(0)
-    let[profile,setProfile]=useState({})
-    let[cartcat,setCartcat]=useState('')
-    // console.log(clientlog)
+export default function UserContextProvider({ children }) {
+  let [pass, setPass] = useState(false);
+  let [fil, setFil] = useState("");
+  let [clientlog, setClientlog] = useState("");
+  let [count, setCount] = useState(0);
+  let [total, setTotal] = useState(0);
+  let [profile, setProfile] = useState({});
+  let [cartcat, setCartcat] = useState("");
+  let [show, setShow] = useState("");
+  // console.log(clientlog)
   return (
-   <UserContext.Provider value={{pass,setPass,clientlog,setClientlog,count,setCount,total,setTotal,profile,setProfile,cartcat,setCartcat}}>
-{children}
-   </UserContext.Provider> 
-  )
+    <UserContext.Provider
+      value={{
+        pass,
+        setPass,
+        clientlog,
+        setClientlog,
+        count,
+        setCount,
+        total,
+        setTotal,
+        profile,
+        setProfile,
+        cartcat,
+        setCartcat,
+        fil,
+        setFil,
+        show, setShow
+      }}
+    >
+      {children}
+    </UserContext.Provider>
+  );
 }

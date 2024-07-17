@@ -2,10 +2,12 @@ import axios from "axios";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Usercontext from "../context/Usercontext";
+import { FaFilter } from "react-icons/fa6";
 
+// ${ count > 0 ? "block" : "hidden"}
 export default function ClientNav() {
-  const ref = useRef(null)
-  let {setCartcat,cartcat}=useContext(Usercontext) 
+  const ref = useRef(null);
+  let { setCartcat, cartcat } = useContext(Usercontext);
   let { count, setCount } = useContext(Usercontext);
   let [result, setResult] = useState([]);
   let { total, clientlog } = useContext(Usercontext);
@@ -16,26 +18,26 @@ export default function ClientNav() {
     let result = await axios.get(
       `http://localhost:3000/api/getDatabysearch/${search}`
     );
-   const searchStart = search ? [...result.data.map((pro) => pro.productType)] : [];
+    const searchStart = search
+      ? [...result.data.map((pro) => pro.productType)]
+      : [];
     setResult(searchStart);
   }
   useEffect(() => {
     searches();
   }, [search]);
 
-  let navli = [
-    'ALL','Mens','Womens','Electronics','Jewellery'
-  ]
+  let navli = ["ALL", "Mens", "Womens", "Electronics", "Jewellery"];
 
   const handleClickOutside = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
-     setResult([])
+      setResult([]);
     }
   };
 
-// if(result.length>0){
+  // if(result.length>0){
   document.addEventListener("click", handleClickOutside);
-// }
+  // }
   return (
     <div>
       <div className="navbar bg-base-100 bg-blue-100">
@@ -43,17 +45,19 @@ export default function ClientNav() {
           <a className="btn btn-ghost text-xl text-blue-800 font-bold">
             DeVKart
           </a>
-        </div>  
-       <div className="font-bold gap-5">
-      {navli.map((lis)=>(
-         <Link
-         to={'/cards'}
-         onClick={(e)=>{setCartcat(e.target.innerHTML)}
-         }
-         >{lis}</Link>
-      ))}
-      
-       </div>
+        </div>
+        <div className="font-bold gap-5">
+          {navli.map((lis) => (
+            <Link
+              to={"/cards"}
+              onClick={(e) => {
+                setCartcat(e.target.innerHTML);
+              }}
+            >
+              {lis}
+            </Link>
+          ))}
+        </div>
         <div className="flex-none">
           <input
             className={`h-10 w-[250px] rounded-md bg-gray-100 p-2 focus:outline-none focus:text-gray-600 mx-3`}
@@ -61,19 +65,24 @@ export default function ClientNav() {
             type="text"
             onChange={(e) => setSearch(e.target.value)}
           />
-          {result.length>0 && (
-             <div ref={ref} className="absolute top-20 bg-white w-[270px] h-[400px] flex flex-col rounded-md shadow-lg p-2 z-20 overflow-y-auto">
-             {result.map((result, index) => (
-                <Link 
-                to={'/cards'}
-                key={index} className="p-2 hover:bg-gray-200"
-                onClick={(e)=>setCartcat(e.target.innerHTML)}
+          {result.length > 0 && (
+            <div
+              ref={ref}
+              className="absolute top-20 bg-white w-[270px] h-[400px] flex flex-col rounded-md shadow-lg p-2 z-20 overflow-y-auto"
+            >
+              {result.map((result, index) => (
+                <Link
+                  to={"/cards"}
+                  key={index}
+                  className="p-2 hover:bg-gray-200"
+                  onClick={(e) => setCartcat(e.target.innerHTML)}
                 >
                   {result}
                 </Link>
-             ))}
-           </div>
+              ))}
+            </div>
           )}
+
           <div className="dropdown dropdown-end">
             <div
               tabIndex={0}

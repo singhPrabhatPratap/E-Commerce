@@ -12,6 +12,7 @@ export default function Cart() {
   let { clientlog } = useContext(Usercontext);
   let { setCount } = useContext(Usercontext);
   let { total,setTotal } = useContext(Usercontext);
+  
   async function getCart() {
     let result = await axios.get(
       `http://localhost:3000/clientTable/getCart/${clientlog}`
@@ -50,8 +51,8 @@ let single = 0
             <div className="flex w-full space-x-2 sm:space-x-4">
               <img
                 className="h-20 w-20 flex-shrink-0 rounded object-contain outline-none dark:border-transparent sm:h-32 sm:w-32"
-                src={product.imageSrc}
-                alt={product.name}
+                src={`http://localhost:3000/${product.productimage}`}
+                // alt={product.name}
               />
               <div className="flex w-full flex-col justify-between pb-4">
                 <div className="flex w-full justify-between space-x-2 pb-2">

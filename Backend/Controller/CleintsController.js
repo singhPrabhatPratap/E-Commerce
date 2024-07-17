@@ -22,6 +22,7 @@ exports.cartSave=(req,res)=>{
     let productPrice = req.body.productPrice
     let productRating = req.body.productRating
     let productType = req.body.productType
+    // let productimage = req.file.filename
 
     let value=[[productBrand,productPrice,productRating,productType]]
   let sql = `insert into ${unique}(productBrand,productPrice,productRating,productType)values ?`
