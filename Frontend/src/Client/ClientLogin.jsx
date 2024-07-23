@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { ArrowRight, UserCheckIcon } from "lucide-react";
 import Usercontext from "../context/Usercontext";
 import axios from "axios";
+import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 
 // http://localhost:3000/clientTable/CreateCleintTable/${unique}      tablecreate
@@ -13,7 +14,7 @@ export default function ClientLogin() {
   let { setProfile } = useContext(Usercontext);
   let { setCount } = useContext(Usercontext);
   let { setTotal } = useContext(Usercontext);
-  
+
   let [data, setData] = useState({
     email: "",
     password: "",
@@ -23,36 +24,46 @@ export default function ClientLogin() {
   function handlechange(e) {
     setData({ ...data, [e.target.name]: e.target.value });
   }
+
   async function handlesubmit(e) {
     e.preventDefault();
-    let result = await axios.post("http://localhost:3000/User/UserLogin", data);
-    let unique = data.email.split("@")[0];
-    // console.log(unique)
-    if (result.data) {
-      setClientlog(unique);
-      // console.log(unique)
-      setProfile(result.data.user)
-      
-      navigation("/");
-      getCart(unique)
+    try {
+      let result = await axios.post("http://localhost:3000/User/UserLogin", data);
+      let unique = data.email.split("@")[0];
+      console.log(result)
 
-      await axios.post(
-        `http://localhost:3000/clientTable/CreateCleintTable/${unique}`
-      );
+      if (result.data.success) {
+        setClientlog(unique);
+        setProfile(result.data.user);
+        navigation("/");
+        getCart(unique);
+        toast.success(result.data.message);
+  
+        await axios.post(
+          `http://localhost:3000/clientTable/CreateCleintTable/${unique}`
+        );
+      } else {
+        toast.error(result.data.message || 'Please Enter a valid Email or Password');
+        console.log('Login failed');
+      }
+    } catch (error) {
+      toast.error('An error occurred. Please try again later.');
+      console.log('Error:', error);
     }
   }
+  
   async function getCart(unique) {
     let result = await axios.get(
       `http://localhost:3000/clientTable/getCart/${unique}`
     );
-  
-    setCount(result.data.length)
-    let single = 0
+
+    setCount(result.data.length);
+    let single = 0;
     result.data.map((price) => {
       let prices = parseFloat(price.productPrice);
-     single = single+prices
+      single = single + prices;
     });
-    setTotal(single)
+    setTotal(single);
   }
   return (
     <section>

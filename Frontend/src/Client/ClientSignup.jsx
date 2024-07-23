@@ -1,42 +1,46 @@
-import React, { useState } from 'react'
-import { ArrowRight } from 'lucide-react'
-import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import React, { useState } from "react";
+import { ArrowRight } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 export default function ClientSignUp() {
-let navigation = useNavigate()
+  let navigation = useNavigate();
 
-  let [name,setName]=useState("")
-  let [email,setemail]=useState("")
-  let [image,setimage]=useState(null)
-  let [username,setusername]=useState("")
-  let [password,setpassword]=useState("")
+  let [name, setName] = useState("");
+  let [email, setemail] = useState("");
+  let [image, setimage] = useState(null);
+  let [username, setusername] = useState("");
+  let [password, setpassword] = useState("");
 
-async function handlesubmit(){
-  let data  = new FormData()
-data.append('name',name),
-data.append('email',email),
-data.append('image',image)
-data.append('username',username)
-data.append('password',password)
-await axios.post(' http://localhost:3000/User/SaveUser',data,{
-  headers:{
-'Content-Type':'multiPart/Form-Data'
+  async function handlesubmit() {
+    let data = new FormData();
+    data.append("name", name),
+      data.append("email", email),
+      data.append("image", image);
+    data.append("username", username);
+    data.append("password", password);
+    await axios.post(" http://localhost:3000/User/SaveUser", data, {
+      headers: {
+        "Content-Type": "multiPart/Form-Data",
+      },
+    });
+    navigation("/clientlogin");
+
   }
-});
-navigation('/clientlogin')
-}
 
   return (
     <section>
       <div className="grid grid-cols-1 lg:grid-cols-2">
         <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
           <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md">
-            <h2 className="text-3xl font-bold leading-tight text-black sm:text-4xl">Sign up</h2>
+            <h2 className="text-3xl font-bold leading-tight text-black sm:text-4xl">
+              Sign up
+            </h2>
             <p className="mt-2 text-base text-gray-600">
-              Already have an account?{' '}
+              Already have an account?{" "}
               <Link
-               to={'/clientlogin'}
+                to={"/clientlogin"}
                 title=""
                 className="font-medium text-black transition-all duration-200 hover:underline"
               >
@@ -46,79 +50,94 @@ navigation('/clientlogin')
             <form action="#" method="POST" className="mt-8">
               <div className="space-y-5">
                 <div>
-                  <label htmlFor="name" className="text-base font-medium text-gray-900">
-                    {' '}
-                    Full Name{' '}
+                  <label
+                    htmlFor="name"
+                    className="text-base font-medium text-gray-900"
+                  >
+                    {" "}
+                    Full Name{" "}
                   </label>
                   <div className="mt-2">
                     <input
                       className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                       type="text"
                       placeholder="Full Name"
-                     onChange={(e)=>setName(e.target.value)}
+                      onChange={(e) => setName(e.target.value)}
                     ></input>
                   </div>
                 </div>
                 <div>
-                  <label htmlFor="email" className="text-base font-medium text-gray-900">
-                    {' '}
-                    Email address{' '}
+                  <label
+                    htmlFor="email"
+                    className="text-base font-medium text-gray-900"
+                  >
+                    {" "}
+                    Email address{" "}
                   </label>
                   <div className="mt-2">
                     <input
                       className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                       type="email"
-                      onChange={(e)=>setemail(e.target.value)}
+                      onChange={(e) => setemail(e.target.value)}
                     ></input>
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="text-base font-medium text-gray-900">
-                    {' '}
-                    USERNAME{' '}
+                  <label
+                    htmlFor="email"
+                    className="text-base font-medium text-gray-900"
+                  >
+                    {" "}
+                    USERNAME{" "}
                   </label>
                   <div className="mt-2">
                     <input
                       className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                       type="text"
-                      onChange={(e)=>setusername(e.target.value)}
+                      onChange={(e) => setusername(e.target.value)}
                     ></input>
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="text-base font-medium text-gray-900">
-                    {' '}
-                    Image{' '}
+                  <label
+                    htmlFor="email"
+                    className="text-base font-medium text-gray-900"
+                  >
+                    {" "}
+                    Image{" "}
                   </label>
                   <div className="mt-2">
                     <input
                       className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                       type="file"
-                      onChange={(e)=>setimage(e.target.files[0])}
+                      onChange={(e) => setimage(e.target.files[0])}
                     ></input>
                   </div>
                 </div>
 
                 <div>
                   <div className="flex items-center justify-between">
-                    <label htmlFor="password" className="text-base font-medium text-gray-900">
-                      {' '}
-                      Password{' '}
+                    <label
+                      htmlFor="password"
+                      className="text-base font-medium text-gray-900"
+                    >
+                      {" "}
+                      Password{" "}
                     </label>
                   </div>
                   <div className="mt-2">
                     <input
                       className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                       type="password"
-                      onChange={(e)=>setpassword(e.target.value)}
+                      onChange={(e) => setpassword(e.target.value)}
                     ></input>
                   </div>
                 </div>
                 <div>
                   <button
-                  onClick={handlesubmit}
+                    onClick={handlesubmit}
                     type="button"
                     className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
                   >
@@ -172,5 +191,5 @@ navigation('/clientlogin')
         </div>
       </div>
     </section>
-  )
+  );
 }
