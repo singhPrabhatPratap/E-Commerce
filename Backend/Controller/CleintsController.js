@@ -1,5 +1,6 @@
 const db = require('../Databaseconfig.js')
 exports.ClientTable=(req,res)=>{
+    //safdsf
     let unique = req.params.unique
     let tablecreation = `create table if not exists ${unique}(
     id int auto_increment primary key,
