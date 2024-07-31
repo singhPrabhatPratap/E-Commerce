@@ -1,5 +1,6 @@
 const express = require("express")
 const cors = require("cors")
+const {config} = require('dotenv')
 let db = require("./Databaseconfig.js")
 let Productrouters = require("./Route/productRoute.js")
 const Adminrouters =require("./Route/AdminRoute.js")
@@ -9,6 +10,7 @@ let app = express()
 app.use(express.json())
 app.use(cors())
 app.use(express.static('Uploads'))
+config({path:"./.env"})
 
 db.connect((err)=>{
     if(err) throw err
@@ -65,7 +67,7 @@ app.use("/Admin",Adminrouters)
 app.use("/User",UserRoute)
 app.use('/clientTable',UserTablecreate)
 
-app.listen(3000,()=>{
-    console.log("opened in localhost")
+app.listen(process.env.PORT,()=>{
+    console.log(`opened in localhost ${process.env.PORT}`)
 })
 

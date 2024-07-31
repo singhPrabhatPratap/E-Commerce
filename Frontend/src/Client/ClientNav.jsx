@@ -1,10 +1,9 @@
 import axios from "axios";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Usercontext from "../context/Usercontext";
-import { FaFilter } from "react-icons/fa6";
+import { TiThMenu } from "react-icons/ti";
 
-// ${ count > 0 ? "block" : "hidden"}
 export default function ClientNav() {
   const ref = useRef(null);
   let { setCartcat, cartcat } = useContext(Usercontext);
@@ -13,7 +12,7 @@ export default function ClientNav() {
   let { total, clientlog } = useContext(Usercontext);
   let { profile } = useContext(Usercontext);
   let [search, setSearch] = useState("");
-  // console.log(cartcat)
+
   async function searches() {
     let result = await axios.get(
       `http://localhost:3000/api/getDatabysearch/${search}`
@@ -35,18 +34,16 @@ export default function ClientNav() {
     }
   };
 
-  // if(result.length>0){
   document.addEventListener("click", handleClickOutside);
-  // }
   return (
     <div>
       <div className="navbar bg-base-100 bg-blue-100">
         <div className="flex-1">
           <a className="btn btn-ghost text-xl text-blue-800 font-bold">
-            DeVKart
+            ShoP
           </a>
         </div>
-        <div className="font-bold gap-5">
+        <div className="hidden font-bold gap-x-3 md:flex">
           {navli.map((lis) => (
             <Link
               to={"/cards"}
@@ -60,7 +57,7 @@ export default function ClientNav() {
         </div>
         <div className="flex-none">
           <input
-            className={`h-10 w-[250px] rounded-md bg-gray-100 p-2 focus:outline-none focus:text-gray-600 mx-3`}
+            className={`h-10 w-[250px] rounded-md bg-gray-100 p-2 focus:outline-none focus:text-gray-600 mx-2`}
             placeholder="Search..."
             type="text"
             onChange={(e) => setSearch(e.target.value)}
@@ -147,6 +144,7 @@ export default function ClientNav() {
               </Link>
             )}
           </div>
+          {/* <TiThMenu /> */}
         </div>
       </div>
     </div>

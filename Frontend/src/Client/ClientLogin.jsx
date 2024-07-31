@@ -30,7 +30,7 @@ export default function ClientLogin() {
     try {
       let result = await axios.post("http://localhost:3000/User/UserLogin", data);
       let unique = data.email.split("@")[0];
-      console.log(result)
+      localStorage.setItem('token',result.data.tokens)
 
       if (result.data.success) {
         setClientlog(unique);
@@ -44,11 +44,11 @@ export default function ClientLogin() {
         );
       } else {
         toast.error(result.data.message || 'Please Enter a valid Email or Password');
-        console.log('Login failed');
+        // console.log('Login failed');
       }
     } catch (error) {
       toast.error('An error occurred. Please try again later.');
-      console.log('Error:', error);
+      // console.log('Error:', error);
     }
   }
   

@@ -1,5 +1,10 @@
 const db = require("../Databaseconfig.js");
 const bcrypt = require("bcryptjs");
+const jwt = require('jsonwebtoken')
+function generatewebToken(user){
+  return jwt.sign({id:user.id},process.env.JWT_SECRET,{expiresIn:process.env.JWT_EXPIRESIN,})
+}
+
 exports.saveUser = async (req, res) => {
   let name = req.body.name;
   let email = req.body.email;
@@ -27,11 +32,12 @@ exports.clientlogin = (req, res) => {
   db.query(sql, [[email]], (err, result) => {
     if (err) throw err;
     if(result.length>0) {
-      bcrypt.compare(password, result[0].password, (err, istrue) => {
+      bcrypt.compare(password, result[0].password, async(err, istrue) => {
         if (err) throw err;
         else {
           if (istrue == true) {
-            res.send({ success: true, user: result[0] ,message:"Logged In"});
+            let token = await generatewebToken(result[0])
+            res.send({ success: true, user: result[0] ,message:"Logged In" ,tokens:token});
           } else {
             res.send({ success: false,message:"Please Enter a Valid Email or Password !" });
           }
@@ -43,3 +49,22 @@ exports.clientlogin = (req, res) => {
     }
   });
 };
+
+exports.getval = async(req,res)=>{
+  let token = req.headers['authorization'].split(" ")[1]
+  // console.log(token)
+  jwt.verify(token,process.env.JWT_SECRET,(err,decode)=>{
+    if(err)throw err
+    else{
+      // console.log(decode)
+      let sql = 'select * from userlist where id=?'
+      db.query(sql,[decode.id],(err,result)=>{
+        if(err)throw err
+        else{
+          res.json(result)
+        }
+      })
+    }
+  })
+ 
+}

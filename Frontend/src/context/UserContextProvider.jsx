@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserContext from "./Usercontext.js";
+import axios from 'axios'
 
 export default function UserContextProvider({ children }) {
   let [pass, setPass] = useState(false);
@@ -10,7 +11,22 @@ export default function UserContextProvider({ children }) {
   let [profile, setProfile] = useState({});
   let [cartcat, setCartcat] = useState("");
   let [show, setShow] = useState("");
-  // console.log(clientlog)
+
+  let token = async()=>{
+    let val = localStorage.getItem('token')
+    if(val){
+      let result = await axios.get('http://localhost:3000/User/verify')
+      // console.log(result.data[0])
+    }
+  }
+  useEffect(()=>{
+    let val = localStorage.getItem('token')
+    if(val){
+      axios.defaults.headers.common['Authorization']=`Bearer ${val}`
+    }
+token()
+  },[])
+  
   return (
     <UserContext.Provider
       value={{

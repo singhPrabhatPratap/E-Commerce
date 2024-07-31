@@ -4,5 +4,6 @@ let route = express.Router()
 let uploads  = require('../multerConfig.js')
 route.post("/SaveUser",uploads.single('image'),UserController.saveUser)
 route.post("/UserLogin",UserController.clientlogin)
+route.get("/verify",UserController.getval)
 
 module.exports = route
