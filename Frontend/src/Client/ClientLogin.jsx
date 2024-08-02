@@ -9,8 +9,8 @@ import { Link, useNavigate } from "react-router-dom";
 // http://localhost:3000/User/UserLogin                                userlogin
 
 export default function ClientLogin() {
-  let navigation = useNavigate();
-  let { setClientlog } = useContext(Usercontext);
+ 
+  let { setClientlog,userLogin } = useContext(Usercontext);
   let { setProfile } = useContext(Usercontext);
   let { setCount } = useContext(Usercontext);
   let { setTotal } = useContext(Usercontext);
@@ -27,44 +27,46 @@ export default function ClientLogin() {
 
   async function handlesubmit(e) {
     e.preventDefault();
-    try {
-      let result = await axios.post("http://localhost:3000/User/UserLogin", data);
-      let unique = data.email.split("@")[0];
-      localStorage.setItem('token',result.data.tokens)
+   userLogin(data)
 
-      if (result.data.success) {
-        setClientlog(unique);
-        setProfile(result.data.user);
-        navigation("/");
-        getCart(unique);
-        toast.success(result.data.message);
+    // try {
+    //   let result = await axios.post("http://localhost:3000/User/UserLogin", data);
+    //   let unique = data.email.split("@")[0];
+    //   localStorage.setItem('token',result.data.tokens)
+
+    //   if (result.data.success) {
+    //     setClientlog(unique);
+    //     setProfile(result.data.user);
+    //     navigation("/");
+    //     getCart(unique);
+    //     toast.success(result.data.message);
   
-        await axios.post(
-          `http://localhost:3000/clientTable/CreateCleintTable/${unique}`
-        );
-      } else {
-        toast.error(result.data.message || 'Please Enter a valid Email or Password');
-        // console.log('Login failed');
-      }
-    } catch (error) {
-      toast.error('An error occurred. Please try again later.');
-      // console.log('Error:', error);
-    }
+    //     await axios.post(
+    //       `http://localhost:3000/clientTable/CreateCleintTable/${unique}`
+    //     );
+    //   } else {
+    //     toast.error(result.data.message || 'Please Enter a valid Email or Password');
+    //     // console.log('Login failed');
+    //   }
+    // } catch (error) {
+    //   toast.error('An error occurred. Please try again later.');
+    //   // console.log('Error:', error);
+    // }
   }
   
-  async function getCart(unique) {
-    let result = await axios.get(
-      `http://localhost:3000/clientTable/getCart/${unique}`
-    );
+  // async function getCart(unique) {
+  //   let result = await axios.get(
+  //     `http://localhost:3000/clientTable/getCart/${unique}`
+  //   );
 
-    setCount(result.data.length);
-    let single = 0;
-    result.data.map((price) => {
-      let prices = parseFloat(price.productPrice);
-      single = single + prices;
-    });
-    setTotal(single);
-  }
+  //   setCount(result.data.length);
+  //   let single = 0;
+  //   result.data.map((price) => {
+  //     let prices = parseFloat(price.productPrice);
+  //     single = single + prices;
+  //   });
+  //   setTotal(single);
+  // }
   return (
     <section>
       <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">

@@ -7,9 +7,9 @@ import { TiThMenu } from "react-icons/ti";
 export default function ClientNav() {
   const ref = useRef(null);
   let { setCartcat, cartcat } = useContext(Usercontext);
-  let { count, setCount } = useContext(Usercontext);
+  let { count } = useContext(Usercontext);
   let [result, setResult] = useState([]);
-  let { total, clientlog } = useContext(Usercontext);
+  let { total, auth } = useContext(Usercontext);
   let { profile } = useContext(Usercontext);
   let [search, setSearch] = useState("");
 
@@ -126,7 +126,7 @@ export default function ClientNav() {
             </div>
           </div>
           <div className="dropdown dropdown-end mx-3">
-            {clientlog ? (
+            {auth.isAuthenticated ? (
               <Link to={"/profile"} className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full">
                   <img

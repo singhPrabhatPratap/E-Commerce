@@ -1,9 +1,17 @@
 import React, { useContext } from 'react'
 import Usercontext from '../context/Usercontext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Profile() {
-    let { profile } = useContext(Usercontext);
+  let navigation=useNavigate()
+    let { profile,setAuth } = useContext(Usercontext);
+    function handleLogout(){
+      localStorage.removeItem('token')
+      window.location.reload()
+      navigation('/')
+      
+  setAuth({token:null, isAuthenticated: false, userId: ''})
+    }
   return (
     <section className="px-2 py-10 md:px-0">
       <div className="mx-auto max-w-4xl">
@@ -23,7 +31,7 @@ export default function Profile() {
           </div><br />
           <Link
             to={'/'}
-          onClick={()=>window.reload()}
+          onClick={()=>handleLogout()}
           className='text-red-500 font-bold'>LOGOUT
           </Link>
         </div>

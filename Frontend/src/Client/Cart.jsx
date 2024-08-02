@@ -10,7 +10,7 @@ export default function Cart() {
   // let total = 0;
   let [data, setData] = useState([]);
   let { clientlog } = useContext(Usercontext);
-  let { setCount } = useContext(Usercontext);
+  let { setCount} = useContext(Usercontext);
   let { total,setTotal } = useContext(Usercontext);
   
   async function getCart() {
