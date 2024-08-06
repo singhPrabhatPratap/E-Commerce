@@ -76,7 +76,7 @@ export default function Homes() {
   return (
     <div className="mt-5">
       <Carousel />
-      <div className="p-10 flex flex-row flex-wrap">
+      <div className="p-10 grid grid-cols-1 xl:grid-cols-5  lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2">
         {option.map((card) => (
           <div
             onClick={() => handleclick(card.category)}

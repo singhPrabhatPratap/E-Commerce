@@ -13,6 +13,7 @@ export default function Cards() {
   let { total, setTotal } = useContext(Usercontext);
 
   async function getData() {
+    
     if (cartcat == "ALL") {
       let result = await axios.get(`http://localhost:3000/api/getData`);
       if (fil) {
@@ -23,6 +24,7 @@ export default function Cards() {
      }
     } else {
       let result = await axios.get(`http://localhost:3000/api/getData`);
+     if(cartcat){
       let catdata=result.data.filter((element) => element.productType == cartcat);
       if(fil){
         setData(catdata.filter((dat)=>dat.productBrand === fil));
@@ -30,6 +32,11 @@ export default function Cards() {
       else{
         setData(catdata)
       }
+     }
+     else{
+      setData(result.data)
+     }
+     
     }
   }
   useEffect(() => {
@@ -72,7 +79,7 @@ export default function Cards() {
 
   return (
     <div className="flex">
-      <div className="sticky h-screen top-0 ">
+      <div className="h-screen top-0">
         <Filter />
       </div>
         <div

@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Usercontext from "../context/Usercontext";
-import { TiThMenu } from "react-icons/ti";
+import { LuMenuSquare } from "react-icons/lu";
 
 export default function ClientNav() {
   const ref = useRef(null);
@@ -12,6 +12,7 @@ export default function ClientNav() {
   let { total, auth } = useContext(Usercontext);
   let { profile } = useContext(Usercontext);
   let [search, setSearch] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
   async function searches() {
     let result = await axios.get(
@@ -33,11 +34,32 @@ export default function ClientNav() {
       setResult([]);
     }
   };
+  function handlesidebar(){
+    setIsOpen(!isOpen)
+  }
 
   document.addEventListener("click", handleClickOutside);
   return (
-    <div>
+    <div className="bg-base-100 bg-blue-100 flex flex-col">
       <div className="navbar bg-base-100 bg-blue-100">
+      < LuMenuSquare className="md:hidden block text-xl text-blue-800" onClick={handlesidebar}/>
+      <div className={`fixed inset-0 bg-gray-800 bg-opacity-50 transition-transform transform ${isOpen ? 'translate-x-0' : 'translate-x-full'} lg:hidden`}>
+      <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-blue-100 shadow-lg p-5">
+      <button onClick={handlesidebar} className="text-right p-4 focus:outline-none">✕</button>
+      <div className="font-bold gap-y -5 flex flex-col">
+          {navli.map((lis) => (
+            <Link
+              to={"/cards"}
+              onClick={(e) => {
+                setCartcat(e.target.innerHTML);
+              }}
+            >
+              {lis}
+            </Link>
+          ))}
+        </div>
+      </div>
+      </div>
         <div className="flex-1">
           <a className="btn btn-ghost text-xl text-blue-800 font-bold">
             ShoP
@@ -56,8 +78,8 @@ export default function ClientNav() {
           ))}
         </div>
         <div className="flex-none">
-          <input
-            className={`h-10 w-[250px] rounded-md bg-gray-100 p-2 focus:outline-none focus:text-gray-600 mx-2`}
+        <input
+            className={`h-10 rounded-md bg-gray-100 p-2 focus:outline-none focus:text-gray-600 mx-2 sm:block hidden`}
             placeholder="Search..."
             type="text"
             onChange={(e) => setSearch(e.target.value)}
@@ -144,8 +166,17 @@ export default function ClientNav() {
               </Link>
             )}
           </div>
-          {/* <TiThMenu /> */}
+        
         </div>
+        
+      </div>
+      <div>
+      <input
+            className={`h-10 w-4/5 rounded-md bg-gray-100 p-2 focus:outline-none focus:text-gray-600 mx-2 sm:hidden block mx-auto mb-3`}
+            placeholder="Search..."
+            type="text"
+            onChange={(e) => setSearch(e.target.value)}
+          />
       </div>
     </div>
   );

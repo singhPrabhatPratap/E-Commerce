@@ -20,28 +20,23 @@ export default function Cart() {
     setData(result.data);
     setCount(result.data.length)
   }
-  useEffect(() => {
-    getCart();
-  }, []);
+  
   async function deleteCart(id) {
     await axios.delete(
       `http://localhost:3000/clientTable/deleteCart/${clientlog}/${id}`
     );
     getCart();
   }
-let single = 0
-  data.map((price) => {
-    let prices = parseFloat(price.productPrice);
-    single=single+prices
-    setTotal(single)
-  });
+
+  let cost  = data.reduce((acc , curent)=> acc + JSON.parse(curent.productPrice) ,0)
+  
+  useEffect(() => {
+    getCart();
+  }, []);
   return (
     <div className="mx-auto flex max-w-3xl flex-col space-y-4 p-6 px-2 sm:p-10 sm:px-2">
       <h2 className="text-3xl font-bold">Your cart</h2>
-      <p className="mt-3 text-sm font-medium text-gray-700">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum eius
-        repellat ipsam, sit praesentium incidunt.
-      </p>
+      
       <ul className="flex flex-col divide-y divide-gray-200">
         {data.map((product) => (
           <li
@@ -64,12 +59,12 @@ let single = 0
                   </div>
                   <div className="text-right">
                     <p className="text-lg font-semibold">
-                      {product.productPrice}
+                    ₹ {product.productPrice}
                     </p>
                   </div>
                   <div className="text-right">
                     <p className="text-lg font-semibold">
-                      {product.productRating}
+                      Rating:{product.productRating}
                     </p>
                   </div>
                 </div>
@@ -99,7 +94,7 @@ let single = 0
       <div className="space-y-1 text-right">
         <p>
           Total amount:
-          <span className="font-semibold">₹{total}</span>
+          <span className="font-semibold">₹{cost}</span>
         </p>
       </div>
       <div className="flex justify-end space-x-4">
