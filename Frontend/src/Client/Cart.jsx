@@ -33,6 +33,7 @@ export default function Cart() {
   useEffect(() => {
     getCart();
   }, []);
+  console.log(data)
   return (
     <div className="mx-auto flex max-w-3xl flex-col space-y-4 p-6 px-2 sm:p-10 sm:px-2">
       <h2 className="text-3xl font-bold">Your cart</h2>

@@ -7,8 +7,8 @@ export default function Profile() {
     let { profile,setAuth } = useContext(Usercontext);
     function handleLogout(){
       localStorage.removeItem('token')
-      window.location.reload()
       navigation('/')
+      window.location.reload()
       setAuth({token:null, isAuthenticated: false, userId: ''})
     }
   return (

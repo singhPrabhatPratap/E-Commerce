@@ -1,6 +1,6 @@
 const db = require('../Databaseconfig.js')
 exports.ClientTable=(req,res)=>{
-    //safdsf
+    
     let unique = req.params.unique
     let tablecreation = `create table if not exists ${unique}(
     id int auto_increment primary key,
@@ -23,10 +23,10 @@ exports.cartSave=(req,res)=>{
     let productPrice = req.body.productPrice
     let productRating = req.body.productRating
     let productType = req.body.productType
-    // let productimage = req.file.filename
+    let productimage = req.body.productimage
 
-    let value=[[productBrand,productPrice,productRating,productType]]
-  let sql = `insert into ${unique}(productBrand,productPrice,productRating,productType)values ?`
+    let value=[[productBrand,productPrice,productRating,productType,productimage]]
+  let sql = `insert into ${unique}(productBrand,productPrice,productRating,productType,productimage)values ?`
   db.query(sql,[value],(err,result)=>{
     if(err)throw err
     else{

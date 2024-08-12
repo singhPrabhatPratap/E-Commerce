@@ -22,8 +22,8 @@ export default function Carousel() {
   },[])
 
   return (
-    <div className='w-full flex items-center justify-center '>
-      <img className={`w-11/12 h-[400px] shadow-2xl transition-opacity duration-500 `} src={image[cu]} alt="Carousel" />
+    <div className='w-full flex items-center justify-center'>
+      <img className={`w-11/12 h-[400px] shadow-2xl rounded-lg`} src={image[cu]} alt="Carousel" />
     </div>
   )
 }

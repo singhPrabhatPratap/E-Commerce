@@ -1,12 +1,13 @@
 import axios from "axios";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { MdFilterList } from "react-icons/md";
 import Usercontext from "../context/Usercontext";
 import { LuMenuSquare } from "react-icons/lu";
 
 export default function ClientNav() {
   const ref = useRef(null);
-  let { setCartcat, cartcat } = useContext(Usercontext);
+  let { setCartcat,filter,setfilter } = useContext(Usercontext);
   let { count } = useContext(Usercontext);
   let [result, setResult] = useState([]);
   let { total, auth } = useContext(Usercontext);
@@ -14,15 +15,22 @@ export default function ClientNav() {
   let [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
+
   async function searches() {
+    
     let result = await axios.get(
       `http://localhost:3000/api/getDatabysearch/${search}`
     );
     const searchStart = search
       ? [...result.data.map((pro) => pro.productType)]
       : [];
-    setResult(searchStart);
+      let arrse =[...new Set(searchStart)]
+      // arrse.push(searchStart)
+// console.log
+
+    setResult(arrse);
   }
+  
   useEffect(() => {
     searches();
   }, [search]);
@@ -87,7 +95,7 @@ export default function ClientNav() {
           {result.length > 0 && (
             <div
               ref={ref}
-              className="absolute top-20 bg-white w-[270px] h-[400px] flex flex-col rounded-md shadow-lg p-2 z-20 overflow-y-auto"
+              className="absolute top-20 bg-white w-[270px] flex flex-col rounded-md shadow-lg p-2 z-20 overflow-y-auto"
             >
               {result.map((result, index) => (
                 <Link
@@ -170,13 +178,14 @@ export default function ClientNav() {
         </div>
         
       </div>
-      <div>
+      <div className="flex sm:hidden block mb-3 w-full p-2 justify-around">
       <input
-            className={`h-10 w-4/5 rounded-md bg-gray-100 p-2 focus:outline-none focus:text-gray-600 mx-2 sm:hidden block mx-auto mb-3`}
+            className={`h-10 w-4/5 rounded-md bg-gray-100 p-2 focus:outline-none focus:text-gray-600`}
             placeholder="Search..."
-            type="text"
+            type="text" 
             onChange={(e) => setSearch(e.target.value)}
           />
+          <MdFilterList  className="my-auto text-2xl  text-blue-800" onClick={()=>setfilter(!filter)}/>
       </div>
     </div>
   );

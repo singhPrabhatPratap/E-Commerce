@@ -80,7 +80,7 @@ export default function Homes() {
         {option.map((card) => (
           <div
             onClick={() => handleclick(card.category)}
-            className="relative h-[400px] w-[250px] rounded-md m-4"
+            className="relative h-[400px] w-[240px] rounded-md m-4 justify-self-center"
           >
             <img
               src={card.img}

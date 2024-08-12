@@ -8,7 +8,7 @@ import Filter from "./Filter";
 export default function Cards() {
   let navigation = useNavigate();
   let [data, setData] = useState([]);
-  let { clientlog, cartcat, fil,setShow } = useContext(Usercontext);
+  let { clientlog, cartcat, fil} = useContext(Usercontext);
   let { setCount } = useContext(Usercontext);
   let { total, setTotal } = useContext(Usercontext);
 
@@ -56,6 +56,7 @@ export default function Cards() {
   }
   async function handleadd(e,product) {
     e.stopPropagation()
+    console.log(product)
     if (clientlog) {
       await axios.post(
         `http://localhost:3000/clientTable/insertCleintTable/${clientlog}`,
@@ -64,7 +65,7 @@ export default function Cards() {
           productRating: product.productRating,
           productPrice: product.productPrice,
           productType: product.productType,
-          productimage: product.productimage,
+          productimage: product.image,
         }
       );
       getCart();
@@ -72,20 +73,21 @@ export default function Cards() {
       navigation("/clientlogin");
     }
   }
-  function showdetail(product){
-    navigation('/carddet')
-    setShow(product)
-  }
+  // function showdetail(product){
+  //   navigation('/carddet')
+  //   setShow(product)
+  // }
 
   return (
     <div className="flex">
       <div className="h-screen top-0">
-        <Filter />
+        <Filter/>
       </div>
         <div
         className="mx-auto grid w-full max-w-7xl items-center space-y-4 px-2 py-10 md:grid-cols-2 md:gap-6 md:space-y-0 lg:grid-cols-4">
           {data.map((product) => (
-            <div className="rounded-md border shadow-xl" onClick={()=>showdetail(product)}>
+            
+            <div className="rounded-md border shadow-xl" >
               
               <img
                 src={`http://localhost:3000/${product.image}`}
