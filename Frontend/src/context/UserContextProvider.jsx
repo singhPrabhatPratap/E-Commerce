@@ -8,6 +8,7 @@ export default function UserContextProvider({ children }) {
   let navigation = useNavigate();
   let [pass, setPass] = useState(false);
   let [fil, setFil] = useState("");
+  let [filter,setfilter]=useState(false)
   let [clientlog, setClientlog] = useState("");
   let [count, setCount] = useState(0);
   let [total, setTotal] = useState(0);
@@ -85,6 +86,8 @@ token()
       value={{
         clientlog, setClientlog,
         pass,
+        filter,
+        setfilter,
         setPass,
         count,
         setCount,
